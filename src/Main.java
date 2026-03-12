@@ -1,7 +1,4 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -22,5 +19,46 @@ public class Main {
         catch(IOException e){
             System.out.println("Erro: "+ e.getMessage());
         }
+
+        String path2 = "C:\\Users\\pedro\\devProjetos\\FileReading\\output.txt";
+
+        String [] lines = new String[] {"Good morning", "Good afternoon", "Good night"};
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(path2, true))){
+            for(String line : lines){
+                bw.write(line);
+                bw.newLine();
+            }
+        }
+        catch(IOException e){
+            System.out.println("Erro: "+ e.getMessage());
+            e.printStackTrace();
+        }
+
+        //working with directories
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the folder path: ");
+        String folderPath = sc.nextLine();
+        File folder = new File(folderPath);
+        File[] folders = folder.listFiles(File::isDirectory);
+        System.out.println("Folders: ");
+        for(File f : folders){
+            System.out.println(f);
+        }
+
+        File[] files = folder.listFiles(File::isFile);
+        System.out.println("Files: ");
+        for(File f : files){
+            System.out.println(f);
+        }
+
+        boolean succes = new File(folderPath + "\\subdir").mkdir();
+        System.out.println("DIrectory created successfully" + succes);
+
+        System.out.println("File: " +folder.getName());
+        System.out.println("Parent: " + folder.getParent());
+        System.out.println("Path: " + folder.getPath());
+        sc.close();
+
     }
 }
